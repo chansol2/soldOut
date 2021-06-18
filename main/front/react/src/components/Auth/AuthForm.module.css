@@ -1,0 +1,54 @@
+.actions {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 3rem auto;
+}
+
+.actions button {
+  border-radius: 30px;
+  margin-bottom: 0.5rem;
+  height: 50px;
+  background-color: #03c04a;
+  color: black;
+}
+
+.container {
+  margin: 5rem auto;
+  max-width: 25rem;
+  border-radius: 6px;
+  border: 3px solid #03c04a;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.control label {
+  text-align: start;
+  height: 25px;
+  margin-bottom: 0.5rem;
+}
+
+.control input {
+  margin-bottom: 0.5rem;
+  height: 50px;
+}
+
+.image {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background-color: beige;
+  border: black solid 1px;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
