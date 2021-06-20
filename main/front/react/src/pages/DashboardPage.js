@@ -11,7 +11,7 @@ const DashboardPage = () => {
     authCtx.logout();
     console.log(authCtx.isLoggedIn);
 
-    history.replace("/auth");
+    history.replace("/");
   };
 
   return (
