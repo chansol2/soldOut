@@ -9,7 +9,7 @@ function App() {
   const authCtx = useContext(AuthContext);
   return (
     <Switch>
-      <Route path="/">
+      <Route path="/" exact>
         {!authCtx.isLoggedIn && <AuthPage />}
         {authCtx.isLoggedIn && <Redirect to="/dashboard" />}
       </Route>
