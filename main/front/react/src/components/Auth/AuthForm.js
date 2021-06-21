@@ -17,7 +17,7 @@ const AuthForm = () => {
     const enteredUsername = usernameInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    fetch("http://localhost:5000/auth", {
+    fetch("http://13.125.108.155/api/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
