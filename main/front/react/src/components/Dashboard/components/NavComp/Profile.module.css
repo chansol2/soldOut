@@ -1,0 +1,20 @@
+.container {
+  height: 25vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.subContainer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: solid 1px black;
+  margin: 0 auto;
+}
+
+.text {
+  margin-top: 1.5rem;
+}

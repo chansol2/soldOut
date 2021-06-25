@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  width: 80px;
+  height: 30px;
+}

@@ -8,8 +8,13 @@ flask = "*"
 flask-restful = "*"
 flask-jwt = "*"
 flask-cors = "*"
+flask-sqlalchemy = "*"
+bs4 = "*"
+requests = "*"
+lxml = "*"
 
 [dev-packages]
+pandas = "*"
 
 [requires]
 python_version = "3.9"

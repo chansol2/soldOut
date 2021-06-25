@@ -1,24 +1,12 @@
-import { useContext } from "react";
-import { useHistory } from "react-router-dom";
-import AuthContext from "../store/auth-context";
-
+import DBLayout from "../components/Layout/DBLayout";
+import NavigationBar from "../components/Dashboard/NavigationBar";
+import Board from "../components/Dashboard/Board";
 const DashboardPage = () => {
-  const history = useHistory();
-  const authCtx = useContext(AuthContext);
-  const logoutHandler = (e) => {
-    e.preventDefault();
-    console.log(authCtx.isLoggedIn);
-    authCtx.logout();
-    console.log(authCtx.isLoggedIn);
-
-    history.replace("/");
-  };
-
   return (
-    <div>
-      <h1>Dashboard Page</h1>
-      <button onClick={logoutHandler}>Log out</button>
-    </div>
+    <DBLayout>
+      <NavigationBar />
+      <Board />
+    </DBLayout>
   );
 };
 
