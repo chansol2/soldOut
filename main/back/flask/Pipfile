@@ -15,6 +15,13 @@ lxml = "*"
 
 [dev-packages]
 pandas = "*"
+pylint = "*"
+black = "*"
+pylint-flask = "*"
+pylint-flask-sqlalchemy = "*"
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

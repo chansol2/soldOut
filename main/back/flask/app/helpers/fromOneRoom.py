@@ -3,14 +3,14 @@ import requests
 import time
 
 
-def fromGMarket(prd):
+def fromOneRoom(prd):
     isChanged = False
-    changed = {"prd_id": prd["prd_id"], "seller_nm": "지마켓"}
+    changed = {"prd_id": prd["prd_id"], "seller_nm": "원룸만들기"}
 
     org_url = prd["org_url"]
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36",
     }
 
     try:
@@ -21,7 +21,7 @@ def fromGMarket(prd):
         if res.status_code == 401:
             time.sleep(120)
             print(f"redo {org_url}")
-            return fromGMarket(prd)
+            return fromOneRoom(prd)
         elif res.status_code == 404:
             changed["org_url"] = "404"
             return changed
@@ -32,38 +32,49 @@ def fromGMarket(prd):
         source = res.text
         soup = BeautifulSoup(source, "lxml")
 
-        new_prd_nm = soup.select_one(".itemtit")
+        new_prd_nm = soup.select_one(".sp-sub-product--header-h1 span")
 
         if new_prd_nm:
             new_prd_nm = new_prd_nm.text
 
             if new_prd_nm.replace(" ", "") != prd["prd_nm"].replace(" ", ""):
                 isChanged = True
-                # old = prd['prd_nm']
-                # print(f'new: {new_prd_nm}, old: {old}')
+                # old = prd["prd_nm"]
+                # print(f"new: {new_prd_nm}, old: {old}")
                 changed["prd_nm"] = new_prd_nm
+
         else:
             isChanged = True
-            print(f"product no longer available: {org_url}")
+            print("product no longer available")
             changed["org_url"] = "404"
             return changed
 
-        inStock = soup.select_one("strong.price_real")
+        temp = soup.select(".sp-btn")
 
-        if inStock:
-            if inStock.text == "일시품절":
+        if temp:
+            temp = temp[3].attrs["class"]
+
+            if "displaynone" not in temp:
                 isChanged = True
-                print(f"{inStock.text}: {org_url}")
+                print(f"Not in stock: {org_url} 품절")
                 changed["has_stock"] = False
                 return changed
             else:
-                new_sales_price = inStock.text[0:-1]
+                new_sales_price = soup.select_one("#span_product_price_text")
 
-                if new_sales_price != prd["sales_price"]:
+                if new_sales_price:
+                    new_sales_price = new_sales_price.text[0:-1]
+
+                    if new_sales_price != prd["sales_price"]:
+                        isChanged = True
+                        # old = prd["sales_price"]
+                        # print(f"new: {new_sales_price}, old: {old}")
+                        changed["sales_price"] = new_sales_price
+                else:
                     isChanged = True
-                    # old = prd['sales_price']
-                    # print(f'new: {new_sales_price}, old: {old}')
-                    changed["sales_price"] = new_sales_price
+                    print("product no longer available")
+                    changed["org_url"] = "404"
+                    return changed
 
         else:
             isChanged = True

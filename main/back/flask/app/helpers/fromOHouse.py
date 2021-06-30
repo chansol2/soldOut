@@ -3,14 +3,14 @@ import requests
 import time
 
 
-def fromGMarket(prd):
+def fromOHouse(prd):
     isChanged = False
-    changed = {"prd_id": prd["prd_id"], "seller_nm": "지마켓"}
+    changed = {"prd_id": prd["prd_id"], "seller_nm": "오늘의집"}
 
     org_url = prd["org_url"]
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36",
     }
 
     try:
@@ -21,7 +21,7 @@ def fromGMarket(prd):
         if res.status_code == 401:
             time.sleep(120)
             print(f"redo {org_url}")
-            return fromGMarket(prd)
+            return fromOHouse(prd)
         elif res.status_code == 404:
             changed["org_url"] = "404"
             return changed
@@ -32,15 +32,15 @@ def fromGMarket(prd):
         source = res.text
         soup = BeautifulSoup(source, "lxml")
 
-        new_prd_nm = soup.select_one(".itemtit")
+        new_prd_nm = soup.select_one(".production-selling-header__title__name")
 
         if new_prd_nm:
             new_prd_nm = new_prd_nm.text
 
             if new_prd_nm.replace(" ", "") != prd["prd_nm"].replace(" ", ""):
                 isChanged = True
-                # old = prd['prd_nm']
-                # print(f'new: {new_prd_nm}, old: {old}')
+                # old = prd["prd_nm"]
+                # print(f"new: {new_prd_nm}, old: {old}")
                 changed["prd_nm"] = new_prd_nm
         else:
             isChanged = True
@@ -48,17 +48,21 @@ def fromGMarket(prd):
             changed["org_url"] = "404"
             return changed
 
-        inStock = soup.select_one("strong.price_real")
+        new_sales_price = soup.select(
+            ".production-selling-header__price__price .number"
+        )
 
-        if inStock:
-            if inStock.text == "일시품절":
+        if new_sales_price:
+            notInStock = soup.select_one(
+                ".production-selling-option-form__footer__sold-out"
+            )
+            if notInStock:
                 isChanged = True
-                print(f"{inStock.text}: {org_url}")
+                print(f"Not in stock: {org_url} 품절")
                 changed["has_stock"] = False
                 return changed
             else:
-                new_sales_price = inStock.text[0:-1]
-
+                new_sales_price = new_sales_price[0].text
                 if new_sales_price != prd["sales_price"]:
                     isChanged = True
                     # old = prd['sales_price']
@@ -67,8 +71,8 @@ def fromGMarket(prd):
 
         else:
             isChanged = True
-            print("product no longer available")
-            changed["org_url"] = "404"
+            print(f"Not in stock: {org_url} 단종 또는 미입점")
+            changed["has_stock"] = False
             return changed
 
         if isChanged:
