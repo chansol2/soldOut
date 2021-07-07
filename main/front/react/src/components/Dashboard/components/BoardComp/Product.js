@@ -4,8 +4,14 @@ const Product = (props) => {
   return (
     <div className={classes.container}>
       <div className={classes.upper}>
-        <div>상품 ID</div>
-        <div>{props.prd.prd_id}</div>
+        <div>
+          <div>상품 ID</div>
+          <div>{props.prd.prd_id}</div>
+        </div>
+        <div>
+          <div>상품 ID</div>
+          <div>{props.prd.prd_id}</div>
+        </div>
       </div>
       <div className={classes.lower}>
         <div className={classes.item}>
