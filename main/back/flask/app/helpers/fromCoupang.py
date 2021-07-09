@@ -5,9 +5,9 @@ import time
 
 def fromCoupang(prd):
     isChanged = False
-    changed = {"prd_id": prd["prd_id"], "seller_nm": "쿠팡"}
+    changed = {"prd_id": prd.org_id, "seller_nm": "쿠팡"}
 
-    org_url = prd["org_url"]
+    org_url = prd.org_url
 
     headers = {
         "Host": "www.coupang.com",
@@ -44,7 +44,7 @@ def fromCoupang(prd):
         if new_prd_nm:
             new_prd_nm = new_prd_nm.text
 
-            if new_prd_nm.replace(" ", "") != prd["prd_nm"].replace(" ", ""):
+            if new_prd_nm.replace(" ", "") != prd.prd_nm.replace(" ", ""):
                 isChanged = True
                 # old = prd['prd_nm']
                 # print(f'new: {new_prd_nm}, old: {old}')
@@ -67,7 +67,7 @@ def fromCoupang(prd):
                 if new_sales_price:
                     new_sales_price = new_sales_price.text
 
-                    if new_sales_price != prd["sales_price"]:
+                    if new_sales_price != prd.sales_price:
                         isChanged = True
                         # old = prd["sales_price"]
                         # print(f"new: {new_sales_price}, old: {old}")

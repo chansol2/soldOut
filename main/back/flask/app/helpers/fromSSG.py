@@ -15,9 +15,9 @@ uas = [
 
 def fromSSG(prd):
     isChanged = False
-    changed = {"prd_id": prd["prd_id"], "seller_nm": "SSG"}
+    changed = {"prd_id": prd.org_id, "seller_nm": "SSG"}
 
-    org_url = prd["org_url"]
+    org_url = prd.org_url
 
     ua = choice(uas)
 
@@ -51,7 +51,7 @@ def fromSSG(prd):
         if new_prd_nm:
             new_prd_nm = new_prd_nm.text
 
-            if new_prd_nm.replace(" ", "") != prd["prd_nm"].replace(" ", ""):
+            if new_prd_nm.replace(" ", "") != prd.prd_nm.replace(" ", ""):
                 isChanged = True
                 # old = prd["prd_nm"]
                 # print(f"new: {new_prd_nm}, old: {old}")
@@ -62,9 +62,10 @@ def fromSSG(prd):
             changed["org_url"] = "404"
             return changed
 
-        temp = soup.select(".cdtl_btn_soldout")
+        isTempSoldOut = soup.select(".cdtl_disabled")
+        isSoldOut = soup.select(".cdtl_btn_soldout")
 
-        if temp:
+        if isTempSoldOut or isSoldOut:
             isChanged = True
             print(f"Not in stock: {org_url} 품절")
             changed["has_stock"] = False
@@ -75,7 +76,7 @@ def fromSSG(prd):
         if new_sales_price:
             new_sales_price = new_sales_price.text
 
-            if new_sales_price != prd["sales_price"]:
+            if new_sales_price != prd.sales_price:
                 isChanged = True
                 # old = prd["sales_price"]
                 # print(f"new: {new_sales_price}, old: {old}")

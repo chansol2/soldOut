@@ -6,9 +6,9 @@ from bs4 import BeautifulSoup
 
 def fromOHouse(prd):
     isChanged = False
-    changed = {"prd_id": prd["prd_id"], "seller_nm": "오늘의집"}
+    changed = {"prd_id": prd.org_id, "seller_nm": "오늘의집"}
 
-    org_url = prd["org_url"]
+    org_url = prd.org_url
 
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36",
@@ -38,7 +38,7 @@ def fromOHouse(prd):
         if new_prd_nm:
             new_prd_nm = new_prd_nm.text
 
-            if new_prd_nm.replace(" ", "") != prd["prd_nm"].replace(" ", ""):
+            if new_prd_nm.replace(" ", "") != prd.prd_nm.replace(" ", ""):
                 isChanged = True
                 # old = prd["prd_nm"]
                 # print(f"new: {new_prd_nm}, old: {old}")
@@ -64,7 +64,7 @@ def fromOHouse(prd):
                 return changed
             else:
                 new_sales_price = new_sales_price[0].text
-                if new_sales_price != prd["sales_price"]:
+                if new_sales_price != prd.sales_price:
                     isChanged = True
                     # old = prd['sales_price']
                     # print(f'new: {new_sales_price}, old: {old}')

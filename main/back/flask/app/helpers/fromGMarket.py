@@ -5,9 +5,9 @@ import time
 
 def fromGMarket(prd):
     isChanged = False
-    changed = {"prd_id": prd["prd_id"], "seller_nm": "지마켓"}
+    changed = {"prd_id": prd.org_id, "seller_nm": "지마켓"}
 
-    org_url = prd["org_url"]
+    org_url = prd.org_url
 
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36"
@@ -37,7 +37,7 @@ def fromGMarket(prd):
         if new_prd_nm:
             new_prd_nm = new_prd_nm.text
 
-            if new_prd_nm.replace(" ", "") != prd["prd_nm"].replace(" ", ""):
+            if new_prd_nm.replace(" ", "") != prd.prd_nm.replace(" ", ""):
                 isChanged = True
                 # old = prd['prd_nm']
                 # print(f'new: {new_prd_nm}, old: {old}')
@@ -59,7 +59,7 @@ def fromGMarket(prd):
             else:
                 new_sales_price = inStock.text[0:-1]
 
-                if new_sales_price != prd["sales_price"]:
+                if new_sales_price != prd.sales_price:
                     isChanged = True
                     # old = prd['sales_price']
                     # print(f'new: {new_sales_price}, old: {old}')

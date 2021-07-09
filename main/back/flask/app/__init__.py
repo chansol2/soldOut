@@ -34,8 +34,8 @@ def create_tables():
 
 
 from app.resources.index import Index
+from app.resources.update import Update
 
-# from app.resources.update import Update
 
-# api.add_resource(Update, "/update")
+api.add_resource(Update, "/update")
 api.add_resource(Index, "/index")
