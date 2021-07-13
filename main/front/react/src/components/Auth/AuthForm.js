@@ -37,7 +37,6 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        console.log(data.access_token);
         authCtx.login(data.access_token);
         history.replace("/dashboard");
       })

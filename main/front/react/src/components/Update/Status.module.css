@@ -1,0 +1,93 @@
+.container {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: flex-end;
+  padding-top: 2rem;
+}
+
+.cardOne {
+  min-width: 140px;
+  flex: 0 0 35%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px #333745;
+}
+
+.cardOne .upper {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardOne .upper div:nth-child(1) {
+  flex: 0 0 30%;
+}
+
+.cardOne .upper div:nth-child(2) {
+  flex: 0 0 70%;
+}
+
+.cardOne .lower {
+  height: 40%;
+  background-color: #333745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.cardTwo {
+  min-width: 140px;
+  flex: 0 0 35%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px #fe5f55;
+  margin: 0 2rem;
+}
+
+.cardTwo .upper {
+  width: 100%;
+  height: 60%;
+  text-align: center;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.cardTwo .upper strong {
+  font-size: 50px;
+  color: #fe5f55;
+}
+
+.cardTwo .lower {
+  height: 40%;
+  background-color: #fe5f55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.buttonContainer {
+  flex: 0 1 20%;
+  height: 80%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttonContainer button {
+  background-color: white;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.text {
+  margin-top: 1rem;
+}

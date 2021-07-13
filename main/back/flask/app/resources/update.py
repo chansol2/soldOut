@@ -9,7 +9,7 @@ from app.helpers.fromOneRoom import fromOneRoom
 from app.helpers.fromSSG import fromSSG
 from app.helpers.fromTenByTen import fromTenByTen
 
-from app.models.products import ProductsModel
+from app.models.test import TestModel
 
 from flask_restful import Resource
 
@@ -17,10 +17,10 @@ from flask_restful import Resource
 class Update(Resource):
     def get(self):
         ##possible use of multithreading
-        # all_prds = ProductsModel.query.all()
-        ssg = ProductsModel.query.filter_by(seller_id=15).all()
+        # all_prds = TestModel.query.all()
+        ssg = TestModel.query.filter_by(seller_id=15).all()
 
-        rest = ProductsModel.query.filter(ProductsModel.seller_id != 15).all()
+        rest = TestModel.query.filter(TestModel.seller_id != 15).all()
 
         all_prds = ssg + rest
 
