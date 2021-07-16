@@ -9,24 +9,21 @@ from app.helpers.fromOneRoom import fromOneRoom
 from app.helpers.fromSSG import fromSSG
 from app.helpers.fromTenByTen import fromTenByTen
 
-from app.models.test import TestModel
+from app.models.products import ProductModel
 
 from flask_restful import Resource
 
 
 class Update(Resource):
     def get(self):
-        ##possible use of multithreading
-        # all_prds = TestModel.query.all()
-        ssg = TestModel.query.filter_by(seller_id=15).all()
 
-        rest = TestModel.query.filter(TestModel.seller_id != 15).all()
+        ssg = ProductModel.query.filter_by(seller_id=15).all()
+
+        rest = ProductModel.query.filter(ProductModel.seller_id != 15).all()
 
         all_prds = ssg + rest
 
         prds = [(prd.seller_id, prd) for prd in all_prds]
-
-        # try:
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             results = []
@@ -36,10 +33,10 @@ class Update(Resource):
                     t = randrange(3, 6)
                     time.sleep(t)
                     results.append(executor.submit(fromSSG, prd))
-                elif seller_id == 12:
-                    results.append(executor.submit(fromGMarket, prd))
                 elif seller_id == 11:
                     results.append(executor.submit(fromCoupang, prd))
+                elif seller_id == 12:
+                    results.append(executor.submit(fromGMarket, prd))
                 elif seller_id == 13:
                     results.append(executor.submit(fromOHouse, prd))
                 elif seller_id == 14:
@@ -56,13 +53,4 @@ class Update(Resource):
                     needs_update.append({"id": i, "data": f.result()})
                     i += 1
 
-            # i = 0
-            # for prd in ssg:
-            #     needs_update.append({"id": i, "data": fromSSG(prd)})
-            #     i += 1
-
             return needs_update, 200
-
-
-# except:
-#     return 500

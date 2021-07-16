@@ -7,7 +7,6 @@
 # from app.models.oneRoom import OneRoomModel
 # from app.models.ssg import SSGModel
 # from app.models.tenByTen import TenByTenModel
-from app.models.test import TestModel
 from flask_restful import Resource
 from app import db
 
@@ -15,8 +14,8 @@ from app import db
 class Index(Resource):
     def get(self):
 
-        bed = TestModel.query.filter(TestModel.cate_id.like("101%")).all()
-        print(len(bed))
-        for item in bed:
-            print(item.cate_id)
+        # bed = TestModel.query.filter(TestModel.cate_id.like("101%")).all()
+        # print(len(bed))
+        # for item in bed:
+        #     print(item.cate_id)
         return 200

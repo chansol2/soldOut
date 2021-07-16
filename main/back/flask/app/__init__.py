@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "mysql+pymysql://admin:Nineso20!$@3.37.93.239/products"
+] = "mysql+pymysql://admin:Nineso20!$@3.37.93.239/products_test"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = "jose"
@@ -27,20 +27,10 @@ db = SQLAlchemy(app)
 
 db.Model.metadata.reflect(db.engine)
 
-# Base = automap_base()
-# Base.prepare(db.engine, reflect=True)
-
-
-# @app.before_first_request
-# def create_tables():
-#     db.create_all()
-#     db.session.commit()
-
-
 from app.resources.index import Index
-
 from app.resources.update import Update
+from app.resources.cron import Cron
 
-
-api.add_resource(Update, "/update")
 api.add_resource(Index, "/index")
+api.add_resource(Update, "/update")
+api.add_resource(Cron, "/cron")
