@@ -22,7 +22,7 @@ pylint-flask = "*"
 pylint-flask-sqlalchemy = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
