@@ -1,8 +1,8 @@
 import requests
 from app import db
-from random import choice
 from app import app
 from bs4 import BeautifulSoup
+from random import choice
 
 uas = [
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36",
@@ -14,7 +14,7 @@ uas = [
 
 def fromCoupang(prd, kind):
 
-    app.logger.info(f"coupang {prd.org_url}")
+    app.logger.info("coupang")
 
     org_url = prd.org_url
 
@@ -25,16 +25,21 @@ def fromCoupang(prd, kind):
     ua = choice(uas)
 
     headers = {
+        "Host": "www.coupang.com",
         "User-Agent": ua,
-        "Accept-Encoding": "gzip, deflate",
-        "Accept": "*/*",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Pragma": "no-cache",
+        "Cache-Control": "no-cache",
     }
 
     try:
         res = requests.get(org_url, headers=headers)
         res.raise_for_status()
-        app.logger.info("passed first try clause")
+        app.logger.info("fine till first try clause")
     except requests.exceptions.RequestException as e:
         if res.status_code == 401:
             app.logger.info("401")
@@ -53,14 +58,12 @@ def fromCoupang(prd, kind):
         app.logger.info(e)
         raise (e)
 
-    app.logger.info("till first try except it's fine")
-
     source = res.text
     soup = BeautifulSoup(source, "lxml")
 
     new_prd_nm = soup.select_one(".prod-buy-header__title")
 
-    app.logger.info("till new_prd_nm it's fine")
+    app.logger.info("fine till new_prd_nm")
 
     if kind == "update" and not new_prd_nm:
         app.logger.info(f"product no longer available: {org_url}")

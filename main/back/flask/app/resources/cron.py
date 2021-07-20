@@ -21,17 +21,17 @@ class Cron(Resource):
 
         try:
 
-            ssg = ProductModel.query.filter_by(seller_id=15).all()
+            ssg = ProductModel.query.filter_by(seller_id=11).all()
 
             app.logger.info("here2")
 
-            rest = (
-                ProductModel.query.filter(ProductModel.seller_id != 11)
-                .filter(ProductModel.seller_id != 15)
-                .all()
-            )
+            # rest = (
+            #     ProductModel.query.filter(ProductModel.seller_id != 11)
+            #     .filter(ProductModel.seller_id != 15)
+            #     .all()
+            # )
 
-            all_prds = ssg + rest
+            all_prds = ssg
 
             prds = [(prd.seller_id, prd) for prd in all_prds]
 
