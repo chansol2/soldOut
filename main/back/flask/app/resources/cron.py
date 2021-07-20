@@ -17,26 +17,17 @@ from flask_restful import Resource
 class Cron(Resource):
     def get(self):
 
-        app.logger.info("here")
-
         try:
 
-            ssg = ProductModel.query.filter_by(seller_id=11).all()
+            ssg = ProductModel.query.filter_by(seller_id=15).all()
 
-            app.logger.info("here2")
+            rest = ProductModel.query.filter(ProductModel.seller_id != 15).all()
 
-            # rest = (
-            #     ProductModel.query.filter(ProductModel.seller_id != 11)
-            #     .filter(ProductModel.seller_id != 15)
-            #     .all()
-            # )
-
-            all_prds = ssg
+            all_prds = ssg + rest
 
             prds = [(prd.seller_id, prd) for prd in all_prds]
 
             with concurrent.futures.ThreadPoolExecutor() as executor:
-                app.logger.info("here3")
                 results = []
 
                 for seller_id, prd in prds:
@@ -55,7 +46,7 @@ class Cron(Resource):
                     elif seller_id == 16:
                         results.append(executor.submit(fromTenByTen, prd, "cron"))
                     else:
-                        print(f"wrong seller: {prd}")
+                        app.logger.info(f"wrong seller: {prd}")
 
                 needs_update = []
                 for f in concurrent.futures.as_completed(results):
@@ -67,7 +58,7 @@ class Cron(Resource):
                 try:
                     db.session.add(prd)
                 except Exception as e:
-                    print(e)
+                    app.logger.info(e)
 
             db.session.commit()
             app.logger.info("it's been committed successfully")

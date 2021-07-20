@@ -34,7 +34,6 @@ def fromCoupang(prd, kind):
     try:
         res = requests.get(org_url, headers=headers)
         res.raise_for_status()
-        app.logger.info("fine till first try clause")
     except requests.exceptions.RequestException as e:
         if res.status_code == 401:
             app.logger.info("401")
@@ -57,8 +56,6 @@ def fromCoupang(prd, kind):
     soup = BeautifulSoup(source, "lxml")
 
     new_prd_nm = soup.select_one(".prod-buy-header__title")
-
-    app.logger.info("fine till new_prd_nm")
 
     if kind == "update" and not new_prd_nm:
         app.logger.info(f"product no longer available: {org_url}")
