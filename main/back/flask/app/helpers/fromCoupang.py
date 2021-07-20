@@ -14,7 +14,7 @@ uas = [
 
 def fromCoupang(prd, kind):
 
-    app.logger.info("coupang")
+    app.logger.info(f"coupang {prd.org_url}")
 
     org_url = prd.org_url
 
