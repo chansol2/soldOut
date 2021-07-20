@@ -67,6 +67,8 @@ class Cron(Resource):
 
             db.session.commit()
         except Exception as e:
+            app.logger.info("500")
             return {"message": e}, 500
         else:
+            app.logger.info("it's successful:200")
             return {"message": "it's successful"}, 200

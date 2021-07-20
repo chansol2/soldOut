@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 
 def fromCoupang(prd, kind):
 
+    app.logger.info("coupang")
+
     org_url = prd.org_url
 
     isChanged = False
