@@ -25,7 +25,7 @@ class Cron(Resource):
 
             app.logger.info("here2")
 
-            rest = ProductModel.query.filter(ProductModel.seller_id != 15).all()
+            rest = ProductModel.query.filter(ProductModel.seller_id != 11).all()
 
             all_prds = rest
 
