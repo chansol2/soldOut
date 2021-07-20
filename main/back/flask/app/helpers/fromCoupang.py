@@ -34,24 +34,33 @@ def fromCoupang(prd, kind):
     try:
         res = requests.get(org_url, headers=headers)
         res.raise_for_status()
+        app.logger.info("passed first try clause")
     except requests.exceptions.RequestException as e:
         if res.status_code == 401:
+            app.logger.info("401")
             raise (e)
         elif res.status_code == 404 and kind == "update":
             app.logger.info(f"product no longer available: {org_url}")
             changed["has_stock"] = "404"
             return changed
         elif res.status_code == 404 and kind == "cron":
+            app.logger.info("404")
             return
         else:
+            app.logger.info(e)
             raise (e)
     except Exception as e:
+        app.logger.info(e)
         raise (e)
+
+    app.logger.info("till first try except it's fine")
 
     source = res.text
     soup = BeautifulSoup(source, "lxml")
 
     new_prd_nm = soup.select_one(".prod-buy-header__title")
+
+    app.logger.info("till new_prd_nm it's fine")
 
     if kind == "update" and not new_prd_nm:
         app.logger.info(f"product no longer available: {org_url}")

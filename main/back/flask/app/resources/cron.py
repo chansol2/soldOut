@@ -21,13 +21,17 @@ class Cron(Resource):
 
         try:
 
-            # ssg = ProductModel.query.filter_by(seller_id=15).all()
+            ssg = ProductModel.query.filter_by(seller_id=15).all()
 
             app.logger.info("here2")
 
-            rest = ProductModel.query.filter(ProductModel.seller_id != 11).all()
+            rest = (
+                ProductModel.query.filter(ProductModel.seller_id != 11)
+                .filter(ProductModel.seller_id != 15)
+                .all()
+            )
 
-            all_prds = rest
+            all_prds = ssg + rest
 
             prds = [(prd.seller_id, prd) for prd in all_prds]
 
@@ -66,9 +70,10 @@ class Cron(Resource):
                     print(e)
 
             db.session.commit()
+            app.logger.info("it's been committed successfully")
         except Exception as e:
             app.logger.info("500")
-            return {"message": e}, 500
+            return {"message": str(e)}, 500
         else:
             app.logger.info("it's successful:200")
             return {"message": "it's successful"}, 200
