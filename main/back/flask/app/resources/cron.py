@@ -3,6 +3,7 @@ import time
 from random import randrange
 
 from app import db
+from app import app
 from app.helpers.fromCoupang import fromCoupang
 from app.helpers.fromGMarket import fromGMarket
 from app.helpers.fromOHouse import fromOHouse
@@ -15,6 +16,8 @@ from flask_restful import Resource
 
 class Cron(Resource):
     def get(self):
+
+        app.logger.info("here")
 
         try:
 

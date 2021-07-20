@@ -13,9 +13,5 @@ from app import db
 
 class Index(Resource):
     def get(self):
-
-        # bed = TestModel.query.filter(TestModel.cate_id.like("101%")).all()
-        # print(len(bed))
-        # for item in bed:
-        #     print(item.cate_id)
+        app.logger.info("index:here")
         return 200

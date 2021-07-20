@@ -22,7 +22,7 @@ def fromOHouse(prd, kind):
         if res.status_code == 401:
             raise (e)
         elif res.status_code == 404 and kind == "update":
-            print(f"product no longer available: {org_url}")
+            app.logger.info(f"product no longer available: {org_url}")
             changed["has_stock"] = "404"
             return changed
         elif res.status_code == 404 and kind == "cron":
@@ -38,7 +38,7 @@ def fromOHouse(prd, kind):
     new_prd_nm = soup.select_one(".production-selling-header__title__name")
 
     if kind == "update" and not new_prd_nm:
-        print(f"product no longer available: {org_url}")
+        app.logger.info(f"product no longer available: {org_url}")
         changed["has_stock"] = "404"
         return changed
 
@@ -53,7 +53,7 @@ def fromOHouse(prd, kind):
             if new_prd_nm.replace(" ", "") != prd.prd_nm.replace(" ", ""):
                 prd.prd_nm = new_prd_nm
                 isChanged = True
-                print(f"{prd.id}: named changed")
+                app.logger.info(f"{prd.id}: named changed")
 
         new_sales_price = soup.select(
             ".production-selling-header__price__price .number"
@@ -66,11 +66,11 @@ def fromOHouse(prd, kind):
             if notInStock and prd.has_stock == 1:
                 prd.has_stock = 0
                 isChanged = True
-                print(f"{prd.id}: out of stock")
+                app.logger.info(f"{prd.id}: out of stock")
             elif not notInStock and prd.has_stock == 0:
                 prd.has_stock = 1
                 isChanged = True
-                print(f"{prd.id}: in stock")
+                app.logger.info(f"{prd.id}: in stock")
             elif notInStock and prd.has_stock == 0:
                 pass
             else:
@@ -87,7 +87,7 @@ def fromOHouse(prd, kind):
                 if new_sales_price != prd.sales_price:
                     prd.sales_price = new_sales_price
                     isChanged = True
-                    print(f"{prd.id}: price changed - {new_sales_price}")
+                    app.logger.info(f"{prd.id}: price changed - {new_sales_price}")
 
         if isChanged:
             changed["prd"] = prd
