@@ -1,7 +1,15 @@
 import requests
 from app import db
+from random import choice
 from app import app
 from bs4 import BeautifulSoup
+
+uas = [
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
+]
 
 
 def fromCoupang(prd, kind):
@@ -14,16 +22,13 @@ def fromCoupang(prd, kind):
 
     changed = {"prd": prd}
 
+    ua = choice(uas)
+
     headers = {
-        "Host": "www.coupang.com",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3",
-        "Accept-Encoding": "gzip, deflate, br",
+        "User-Agent": ua,
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
         "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Pragma": "no-cache",
-        "Cache-Control": "no-cache",
     }
 
     try:
