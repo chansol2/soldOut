@@ -23,6 +23,8 @@ class Cron(Resource):
 
             ssg = ProductModel.query.filter_by(seller_id=15).all()
 
+            app.logger.info("here2")
+
             rest = ProductModel.query.filter(ProductModel.seller_id != 15).all()
 
             all_prds = ssg + rest
@@ -30,6 +32,7 @@ class Cron(Resource):
             prds = [(prd.seller_id, prd) for prd in all_prds]
 
             with concurrent.futures.ThreadPoolExecutor() as executor:
+                app.logger.info("here3")
                 results = []
 
                 for seller_id, prd in prds:

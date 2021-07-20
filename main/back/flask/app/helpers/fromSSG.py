@@ -15,6 +15,8 @@ uas = [
 
 def fromSSG(prd, kind):
 
+    app.logger.info("here4")
+
     org_url = prd.org_url
 
     isChanged = False
