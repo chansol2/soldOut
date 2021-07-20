@@ -13,6 +13,7 @@ bs4 = "*"
 requests = "*"
 lxml = "*"
 pymysql = "*"
+flask-mail = "*"
 
 [dev-packages]
 pandas = "*"

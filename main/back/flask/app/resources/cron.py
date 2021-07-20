@@ -1,9 +1,11 @@
 import concurrent.futures
 import time
 from random import randrange
+from flask_mail import Message
 
 from app import db
 from app import app
+from app import mail
 from app.helpers.fromCoupang import fromCoupang
 from app.helpers.fromGMarket import fromGMarket
 from app.helpers.fromOHouse import fromOHouse
@@ -64,7 +66,25 @@ class Cron(Resource):
             app.logger.info("it's been committed successfully")
         except Exception as e:
             app.logger.info("500")
+            msg = Message(
+                "admin",
+                sender="fordifferencekr@gmail.com",
+                recipients=["fordifferencekr@gmail.com"],
+            )
+
+            msg.body = str(e)
+            mail.connect()
+            mail.send(msg)
             return {"message": str(e)}, 500
         else:
             app.logger.info("it's successful:200")
+            msg = Message(
+                "admin",
+                sender="fordifferencekr@gmail.com",
+                recipients=["fordifferencekr@gmail.com"],
+            )
+
+            msg.body = "cronjob has been done successfully"
+            mail.connect()
+            mail.send(msg)
             return {"message": "it's successful"}, 200

@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 
 # from sqlalchemy.ext.automap import automap_base
 from flask_jwt import JWT
@@ -17,6 +18,15 @@ app.config[
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = "jose"
+
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USERNAME"] = "fordifferencekr@gmail.com"
+app.config["MAIL_PASSWORD"] = "nineso123"
+app.config["MAIL_USE_TLS"] = False
+app.config["MAIL_USE_SSL"] = True
+
+mail = Mail(app)
 
 api = Api(app)
 jwt = JWT(app, authenticate, identity)
