@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "mysql+pymysql://admin:Nineso20!$@3.37.93.239/products_test"
+] = "mysql+pymysql://admin:Nineso20!$@3.37.93.239/products"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = "jose"

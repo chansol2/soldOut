@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 
 def fromTenByTen(prd, kind):
 
-    app.logger.info("10x10")
-
     org_url = prd.org_url
 
     isChanged = False

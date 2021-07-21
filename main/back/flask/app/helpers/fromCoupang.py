@@ -9,8 +9,6 @@ uas = ["Apache/2.4.34 (Ubuntu) OpenSSL/1.1.1 (internal dummy connection)"]
 
 def fromCoupang(prd, kind):
 
-    app.logger.info("coupang")
-
     org_url = prd.org_url
 
     isChanged = False

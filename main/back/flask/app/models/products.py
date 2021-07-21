@@ -2,7 +2,7 @@ from app import db
 
 
 class ProductModel(db.Model):
-    __table__ = db.Model.metadata.tables["products_test"]
+    __table__ = db.Model.metadata.tables["products"]
 
     def json(self):
         return {

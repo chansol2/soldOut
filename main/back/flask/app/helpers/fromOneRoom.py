@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 
 def fromOneRoom(prd, kind):
 
-    app.logger.info("oneroom")
-
     org_url = prd.org_url
 
     isChanged = False

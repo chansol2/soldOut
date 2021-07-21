@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 
 def fromOHouse(prd, kind):
 
-    app.logger.info("ohouse")
-
     org_url = prd.org_url
 
     isChanged = False

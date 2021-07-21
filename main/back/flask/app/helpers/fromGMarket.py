@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 
 def fromGMarket(prd, kind):
 
-    app.logger.info("gmarket")
-
     org_url = prd.org_url
 
     isChanged = False
