@@ -9,7 +9,6 @@ from flask_cors import CORS
 
 from app.security import authenticate, identity
 
-
 app = Flask(__name__)
 
 app.config[

@@ -66,6 +66,8 @@ class Cron(Resource):
             app.logger.info("it's been committed successfully")
         except Exception as e:
             app.logger.info("500")
+            app.logger.info(e)
+            raise e
             msg = Message(
                 "admin",
                 sender="fordifferencekr@gmail.com",

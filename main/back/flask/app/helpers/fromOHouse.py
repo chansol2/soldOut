@@ -83,6 +83,7 @@ def fromOHouse(prd, kind):
                         .replace(" ", "")
                     )
                 except Exception as e:
+                    print(org_url)
                     raise (e)
 
                 if new_sales_price != prd.sales_price:

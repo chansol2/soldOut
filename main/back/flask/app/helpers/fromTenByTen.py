@@ -55,6 +55,10 @@ def fromTenByTen(prd, kind):
                 isChanged = True
                 prd.prd_nm = new_prd_nm
                 app.logger.info(f"{prd.id}: named changed")
+        else:
+            app.logger.info(f"product no longer available: {org_url}")
+            changed["has_stock"] = "404"
+            return changed
 
         temp = soup.select(".btnArea a.btn-stock")
 
@@ -80,6 +84,7 @@ def fromTenByTen(prd, kind):
                     .replace(" ", "")
                 )
             except Exception as e:
+                print(org_url)
                 raise (e)
 
             if new_sales_price != prd.sales_price:
