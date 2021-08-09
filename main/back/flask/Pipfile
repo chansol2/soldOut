@@ -14,6 +14,7 @@ requests = "*"
 lxml = "*"
 pymysql = "*"
 flask-mail = "*"
+aiohttp = "*"
 
 [dev-packages]
 pandas = "*"

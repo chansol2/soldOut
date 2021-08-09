@@ -1,41 +1,31 @@
 from app.helpers.gMarket.findLastPage import findLastPage
-from app.helpers.gMarket.itemExtractor import itemExtractor
-import concurrent.futures
-import time
-from random import uniform
+from app.helpers.gMarket.gatherItems import gatherItems
+from app.helpers.gMarket.gatherProducts import gatherProducts
+
+import asyncio
+import ast
 
 
 def bedNHead():
     org_url = "https://browse.gmarket.co.kr/list?category=200000702&k=20&p="
 
     # find the last page_num
-    lastPageNum = findLastPage(org_url)
+    # lastPageNum = findLastPage(org_url)
 
-    # gather all items in the category
-    try:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            results = []
+    # gather all items in the category e.g. [[(url,rate),...]...]
 
-            for i in range(1, lastPageNum + 1):
-                # t = uniform(0.1, 1.1)
-                # time.sleep(t)
-                results.append(executor.submit(itemExtractor, org_url + str(i)))
+    # pages = asyncio.run(gatherItems(org_url, lastPageNum))
 
-            ready_to_parse = []
-            i = 0
-            for f in concurrent.futures.as_completed(results):
-                if f.result():
-                    i += 100
-                    print(i)
-                    ready_to_parse.extend(f.result())
-                else:
-                    print(f.result())
-                    print("here1")
+    # with open("temp.txt", "w") as f:
+    #     f.write(str(pages))
 
-            print(len(ready_to_parse))
-    except Exception as e:
-        raise e
+    with open("temp.txt", "r") as f:
+        for line in f:
+            pages = ast.literal_eval(line)
 
-    # time to parse
+    # time to parse, returns a list of product objects
 
-    # with concurrent.futures.ThreadPoolExecutor() as executor:
+    products = asyncio.run(gatherProducts(pages))
+
+    with open("temp2.txt", "w") as f1:
+        f1.write(str(products))
