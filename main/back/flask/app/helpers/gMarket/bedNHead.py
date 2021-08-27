@@ -1,12 +1,17 @@
 from app.helpers.gMarket.findLastPage import findLastPage
 from app.helpers.gMarket.gatherItems import gatherItems
 from app.helpers.gMarket.gatherProducts import gatherProducts
+from app.helpers.gMarket.preprocessDF import preprocessDF
 
 import asyncio
 import ast
+import time
 
 
 def bedNHead():
+
+    t0 = time.time()
+
     org_url = "https://browse.gmarket.co.kr/list?category=200000702&k=20&p="
 
     # find the last page_num
@@ -27,5 +32,15 @@ def bedNHead():
 
     products = asyncio.run(gatherProducts(pages))
 
-    with open("temp2.txt", "w") as f1:
+    t1 = time.time()
+
+    print(f"elasped time: {t1-t0}")
+
+    with open("temp3.txt", "w") as f1:
         f1.write(str(products))
+
+    products = [x for x in products if x]
+
+    # make a df and preprocess it
+
+    # preprocessDF(products)

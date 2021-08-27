@@ -11,7 +11,7 @@ async def gatherProducts(pages):
             items.extend(page)
 
     tasks = []
-    sem = asyncio.Semaphore(10)
+    sem = asyncio.Semaphore(10000)
 
     for item in items:
         if item:

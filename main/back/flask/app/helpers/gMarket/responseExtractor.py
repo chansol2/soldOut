@@ -4,7 +4,7 @@ from aiohttp import ClientSession
 import asyncio
 
 
-async def responseExtractor(url, sem):
+async def responseExtractor(url, sem, trial=0):
 
     uas = [
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36",
@@ -33,7 +33,11 @@ async def responseExtractor(url, sem):
                     return await res.text()
 
     except asyncio.exceptions.TimeoutError:
-        pass
+        trial += 1
+        if trial > 2:
+            return
+        else:
+            return responseExtractor(url, sem, trial)
 
     except Exception as e:
         print(e)
